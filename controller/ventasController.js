@@ -333,6 +333,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		$scope.Variables.descripcion='';
 		$scope.tallasAgregar=[];
 		$scope.validaciones=false;
+		$scope.bandera.banderaEditar=false;
 		
 	}
 
