@@ -308,7 +308,9 @@
                                             {{tallas.talla}}
                                         </div>
                                         <div class="col-md-2 col-sm-2 col-xs-2 ">
-                                            <input type="number" class="form-control " ng-model="tallas.cantidad" step="6"  value="1" min="6"  max="300" />
+                                            <select ng-model="tallas.cantidad" class="form-control" ng-options="cantidades for cantidades in cantidades">
+                                                
+                                            </select>
 
                                         </div>
                                     </div>
@@ -334,7 +336,7 @@
 
                                 <div id="parent">
                                     <div class="panel" ng-repeat="items in itemsAgregadosPedido">
-                                        <div data-toggle="collapse" data-parent="#parent" data-target="#{{items.rowid_item}}">         {{items.descripcion}}({{items.item_referencia1}})
+                                        <div data-toggle="collapse" data-parent="#parent" data-target="#{{items.rowid_item}}">         {{items.descripcion}}({{items.item_referencia1}})   <span class="fa fa-angle-down pull-right" style="margin-right:4px">
                                         </div>
 
                                         <div id="{{items.rowid_item}}" class="collapse in">
@@ -342,10 +344,19 @@
                                                 <tr>
                                                     <td>Talla</td>
                                                     <td>Cantidad</td>
+                                                    <td>
+                                                        <button class="btn btn-success" ng-click="editItem(items,$index)"><span class="fa fa-pencil"></span></button>
+                                                        <button class="btn btn-danger" ng-click="delete($index)"><span class="fa fa-trash-o"></span></button>
+                                                    </td>
                                                 </tr>
                                                 <tr ng-repeat="subitem in items.tallas">
                                                     <td>{{subitem.talla}}</td>
                                                     <td>{{subitem.cantidad}} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Descripcion
+                                                    </td>
+                                                    <td>{{items.observaciones}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Total</td>

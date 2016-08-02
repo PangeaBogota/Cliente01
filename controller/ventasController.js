@@ -47,7 +47,13 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 	$scope.dataFiltro;
 	$scope.SearchItem;
 	$scope.filter=[];
+	$scope.bandera=[];
+	$scope.bandera.banderaEditar=false;
 	$scope.criterio=[];
+	$scope.bandera.itemEdit=[];
+	$scope.bandera.banderaEditarDelete=0;
+	$scope.empaque=[];
+	$scope.cantidades=CANTIDADES_ITEMS;
 	//var query1="select item.item_referencia||'-'||item.item_descripcion as producto,item.id_unidad,item.rowid as rowid_item,item.item_descripcion as descripcion,precios.rowid as rowid_listaprecios,precios.precio_lista as precio";
 	//var query=query1+" from erp_items item inner join erp_items_precios precios on  item.rowid=precios.rowid_item ";
 	//CRUD.select(query,function(elem){$scope.list_items.push(elem);});
@@ -92,7 +98,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 			vista="select*from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  order by rowid LIMIT 100 ";
 			count="select 100 as cantidad ";
 		}
-		CRUD.select(vista,function(elem){$scope.list_items.push(elem)});
+		CRUD.select(vista,function(elem){$scope.list_items.push(elem);if ($scope.bandera.banderaEditar==true) {$scope.item=$scope.list_items[0]}});
 		//var query1="select item.item_codigo||'-'||item.item_referencia||'-'||item.item_descripcion||'-'||item.id_unidad||'-'||CAST(precios.precio_lista as text)  as producto,item.id_unidad,item.rowid as rowid_item,item.item_descripcion as descripcion,precios.rowid as rowid_listaprecios,precios.precio_lista as precio";
 		//var query=query1+" from erp_items item inner join erp_items_precios precios on  item.rowid=precios.rowid_item  inner join erp_entidades_master maestro on maestro.erp_id_maestro=precios.id_lista_precios  WHERE  maestro.rowid="+$scope.pedidos.rowid_lista_precios+"    order by item.item_descripcion";
 		//CRUD.select(query,function(elem){$scope.list_items.push(elem);});
@@ -148,7 +154,6 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
     	//}
 	}
 	$scope.fechaentrega=function(){
-		debugger
 		$scope.pedidos.fecha_solicitud=$scope.CurrentDate();
 		$scope.pedidos.fechacreacion=$scope.CurrentDate();
 		$scope.pedidos.fecha_entrega=$scope.SelectedDate($scope.dateEntrega);
@@ -165,10 +170,19 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
     	}
 	}
 	$scope.onChangeComboItem=function(){
+		
 		$scope.tallas=[];
 		CRUD.select("select distinct  e.itemID,item.item_referencia,e.extencionDetalle1ID as talla,0 as cantidad from erp_items_extenciones  e inner join erp_items item on item.rowid=e.itemID where e.itemID='"+$scope.item.rowid_item+"'",function(elem){
-			$scope.tallas.push(elem);
+			
 			$scope.validaciones=true;
+			if ($scope.bandera.banderaEditar==true) {
+				angular.forEach($scope.bandera.itemEdit.tallas,function(value,key){
+					if (value.talla==elem.talla) {
+						elem.cantidad=value.cantidad;
+					}
+				})
+			}
+			$scope.tallas.push(elem);
 		})
 	}
 	$scope.onChangeTercero=function(){
@@ -266,10 +280,20 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 			return
 		}
 		$scope.validarExistencia=false;
+		
 		angular.forEach($scope.itemsAgregadosPedido,function(value,key){
 			if ($scope.item.rowid_item==value.rowid_item) {
-				$scope.validarExistencia=true;
-				return;
+				if ($scope.bandera.banderaEditar==true) {
+					$scope.delete($scope.bandera.banderaEditarDelete)
+
+				}
+				else
+				{
+					$scope.validarExistencia=true;
+				}
+
+				
+				
 			}
 		})
 		if($scope.validarExistencia)
@@ -283,7 +307,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		$scope.tallasAgregar=[];
 		$scope.item.cantidad=0;
 		angular.forEach($scope.tallas,function(value,key){
-			if (value.cantidad!=null || value.cantidad!=undefined) {
+			if (value.cantidad!=0) {
 				$scope.tallasAgregar.push(value);
 				$scope.item.cantidad+=value.cantidad;
 				$scope.validacionCantidades++;
@@ -311,6 +335,16 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		$scope.validaciones=false;
 		
 	}
+
+	var hoy=new Date();
+	i=0;
+	while (i<3) { 
+	  hoy.setTime(hoy.getTime()+24*60*60*1000); // añadimos 1 día 
+	  if ( hoy.getDay() != 0) 
+	    i++;   
+	} 
+	debugger
+
 	$scope.CalcularCantidadValorTotal=function(){
 		$scope.valortotal=0;
 		$scope.iva=0;
@@ -329,6 +363,31 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		$scope.pedidoDetalles.iva=$scope.ivatotal;
 		$scope.pedidoDetalles.cantidad=$scope.cantidad;
 		$scope.pedidoDetalles.total=$scope.valortotal+$scope.ivatotal;
+	}
+	$scope.editItem=function(item,index){
+		$scope.filter.descripcionitem=item.item_referencia1;
+		$scope.onChangeListaPrecios();
+		$scope.bandera.banderaEditar=true;
+		$scope.bandera.banderaEditarDelete=index;
+		$scope.bandera.itemEdit=item;
+		$scope.empaque.tipo_reg_nombre=item.empaque;
+		CRUD.select("select*from m_metaclass where  class_code='PEDIDO.EMPAQUE'",
+		function(elem)
+		{
+			$scope.empaques.push(elem)
+			if (elem.tipo_reg_nombre==item.empaque) {
+				$scope.empaque=elem;
+			}
+			
+		});
+		$scope.item=item;
+		$scope.Variables.descripcion=item.observaciones;
+		$scope.onChangeComboItem();
+		//console.log(index)
+    	//$scope.itemsAgregadosPedido.splice(index, 1);
+    	//$scope.CalcularCantidadValorTotal();
+    	$scope.actualizarPrecio();
+    	$scope.CambiarTab('3','atras');
 	}
 	$scope.delete = function (index) {
 		console.log(index)
@@ -482,32 +541,36 @@ app_angular.controller("PedidosController",['Conexion','$scope',function (Conexi
     $scope.ConsultarDatos=function(pedido){
     	$scope.detallespedido=[];
 		$scope.pedidoSeleccionado=pedido;
-		$scope.cont=0;
+		$scope.contadores=[];
+		$scope.tallasAgregar=[];
+		$scope.contadores.cont1=0;
+		$scope.contadores.cont2=0;
+		$scope.contadores.cont3=0;
 		CRUD.select("select distinct rowid_item,linea_descripcion  from t_pedidos_detalle where rowid_pedido ='"+pedido.rowidpedido+"'",function(elem){
-			debugger
-			$scope.tallasAgregar=[];
-			CRUD.select("select tpd.item_ext1 as talla,tpd.cantidad ,count(*) as c from erp_items i "+
+			$scope.detallespedido.push(elem);
+			$scope.contadores.cont1++;
+			CRUD.select("select count(*) as c from erp_items i "+
 				" inner join t_pedidos_detalle tpd on tpd.rowid_item=i.rowid "+
-				" where tpd.rowid_pedido='"+pedido.rowidpedido+"' and tpd.rowid_item='"+elem.rowid_item+"' group by  tpd.item_ext1,talla,tpd.cantidad ",function(talla){
-					$scope.cont++;
-					$scope.tallasAgregar.push(talla);
-					if (talla.c==$scope.cont) {
-						elem.tallas=$scope.tallasAgregar;
-						$scope.detallespedido.push(elem);
-					}
-			})	
+				" where tpd.rowid_pedido='"+pedido.rowidpedido+"' and tpd.rowid_item='"+elem.rowid_item+"'  ",function(contadorProducto){
+
+					CRUD.select("select "+contadorProducto.c+" as contador2,"+$scope.contadores.cont1+" as contador,tpd.item_ext1 as talla,tpd.cantidad ,count(tpd.item_ext1) as c from erp_items i "+
+						" inner join t_pedidos_detalle tpd on tpd.rowid_item=i.rowid "+
+						" where tpd.rowid_pedido='"+pedido.rowidpedido+"' and tpd.rowid_item='"+elem.rowid_item+"' group by  tpd.item_ext1,talla,tpd.cantidad ",function(talla){
+							$scope.contadores.cont2++;
+							$scope.tallasAgregar.push(talla);
+							if (talla.contador2==$scope.contadores.cont2) {
+								$scope.detallespedido[$scope.contadores.cont3].tallas=[];
+								$scope.detallespedido[$scope.contadores.cont3].tallas=$scope.tallasAgregar
+								$scope.tallasAgregar=[];
+								$scope.contadores.cont2=0;
+								$scope.contadores.cont3++;
+							}
+					})	
+			})
+			
 		})
 			
     }
-	$scope.ConsultarDatos1 =function(pedido){
-		$scope.detallespedido=[];
-		$scope.pedidoSeleccionado=pedido;
-
-		CRUD.select('select items.item_referencia, items.item_descripcion, detalle.cantidad, detalle.precio_unitario, detalle.valor_base,detalle.valor_total_linea,detalle.valor_impuesto from t_pedidos pedido left join t_pedidos_detalle detalle on pedido.rowid = detalle.rowid_pedido inner join erp_items items on Detalle.rowid_item = items.rowid where pedido.rowid='+pedido.rowidpedido+'',
-		function(ele){$scope.detallespedido.push(ele);})
-		
-	}
-	
 	$scope.Refrescar =function(){
     	CRUD.selectAll('t_pedidos',function(elem) {$scope.pedidos.push(elem)});
 		$scope.Search = '';
