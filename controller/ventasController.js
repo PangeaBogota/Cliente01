@@ -306,8 +306,13 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		$scope.item.valorTotal=0;
 		$scope.tallasAgregar=[];
 		$scope.item.cantidad=0;
+		$scope.validacionCantidadesmutiplo=false;
 		angular.forEach($scope.tallas,function(value,key){
 			if (value.cantidad!=0) {
+				if (value.cantidad%6!=0) {
+					Mensajes('Revisar Cantidades de la Talla : '+ value.talla,'error','');
+					return
+				}
 				$scope.tallasAgregar.push(value);
 				$scope.item.cantidad+=value.cantidad;
 				$scope.validacionCantidades++;

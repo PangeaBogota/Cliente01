@@ -307,11 +307,12 @@
                                         <div class="col-md-4 col-sm-4 col-xs-4">
                                             {{tallas.talla}}
                                         </div>
-                                        <div class="col-md-2 col-sm-4 col-xs-4 ">
-                                            <select ng-model="tallas.cantidad" class="form-control" ng-options="cant as cant for cant in cantidades">
+                                        <div class="col-md-2 col-sm-2 col-xs-4 ">
+                                            <!--<select ng-model="tallas.cantidad" class="form-control" ng-options="cant as cant for cant in cantidades">
                                                 
                                             </select>
-
+                                            -->
+                                            <input type="number" ng-model="tallas.cantidad"  step="6" min="0" max="300" class="form-control">
                                         </div>
                                     </div>
                                 </div>
