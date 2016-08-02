@@ -557,6 +557,7 @@ app_angular.controller("PedidosController",['Conexion','$scope',function (Conexi
 					CRUD.select("select "+contadorProducto.c+" as contador2,"+$scope.contadores.cont1+" as contador,tpd.item_ext1 as talla,tpd.cantidad ,count(tpd.item_ext1) as c from erp_items i "+
 						" inner join t_pedidos_detalle tpd on tpd.rowid_item=i.rowid "+
 						" where tpd.rowid_pedido='"+pedido.rowidpedido+"' and tpd.rowid_item='"+elem.rowid_item+"' group by  tpd.item_ext1,talla,tpd.cantidad ",function(talla){
+							debugger
 							$scope.contadores.cont2++;
 							$scope.tallasAgregar.push(talla);
 							if (talla.contador2==$scope.contadores.cont2) {
