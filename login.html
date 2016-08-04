@@ -82,6 +82,7 @@
 
             for(var i=0; i < STEP_SINCRONIZACION.length; i++)
                 {
+
                     $.ajax({
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
@@ -138,7 +139,8 @@
             ProcesadoShow();
 
             //alert('Login 1');
-
+            debugger
+            console.log('http://demos.pedidosonline.co/Mobile/Login?username='+$("#username").val()+'&codigo_empresa='+$("#codigo_empresa").val()+'&pass='+$("#password").val())
             $.ajax({
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",

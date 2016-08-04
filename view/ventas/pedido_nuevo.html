@@ -19,7 +19,7 @@
 
                 
             });
-
+            
 
         </script>
         <!-- /select2 -->
@@ -299,17 +299,34 @@
                                             
                                     </div>
                                 </div>
+                                
                                 <div class="form-group" ng-show="validaciones">
                                     <label for="rowid_item" class="control-label">Tallas<span class="required">*</span></label>
                                 </div>
                                 <div class="form-group" ng-repeat="tallas in tallas">
-                                    <div class="row">
+                                    <div class="row" style="margin:0px">
                                         <div class="col-md-4 col-sm-4 col-xs-4">
                                             {{tallas.talla}}
                                         </div>
                                         <div class="col-md-2 col-sm-2 col-xs-4 ">
                                             <!--<select ng-model="tallas.cantidad" class="form-control" ng-options="cant as cant for cant in cantidades"></select>-->
-                                            <input type="text" ng-model="tallas.cantidad"   class="form-control" >
+
+                                            <div class=" input-group"  >
+                                                <span class="input-group-btn" ng-click="cantidadTalla(tallas.talla,'restar')">
+                                                <button type="button" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-minus">
+                                                
+                                                </span>
+                                                </button>
+                                                </span>
+                                            <input type="text" class="form-control text-center" ng-model="tallas.cantidad"  ng-readonly="readonly" style="min-width:100px">
+                                                <span class="input-group-btn" ng-click="cantidadTalla(tallas.talla,'suma')">
+                                                <button type="button" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-plus">
+                                                </span>
+                                                </button>
+                                                </span>
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
@@ -331,8 +348,42 @@
                         <div class="tab-pane" id="tab_3">
                             <form class="form-horizontal form-label-left">
                                 </br>
-
-                                <div id="parent">
+                                <div style="overflow-x:auto;" class="table-resposive" >
+                                    <table class="table  table-striped responsive-utilities jambo_table bulk_action">
+                                        <thead>
+                                            <th class="column-title">
+                                                Ref. 
+                                            </th>
+                                            <th ng-repeat="data in  TABLA_BALANCE" class="column-title">
+                                                {{data.TALLAS}}
+                                            </th>
+                                            <th class="column-title">Total</th>
+                                            <th class="column-title">Emp.</th>
+                                            <th class="column-title">Accion</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="items in itemsAgregadosPedido">
+                                               <td>
+                                                   {{items.item_referencia1}}
+                                               </td>
+                                               <td ng-repeat="talla in items.tallas">
+                                                    <center>
+                                                        {{talla.cantidad1}}
+                                                    </center>
+                                               </td>
+                                               <td>{{items.cantidad}}</td>
+                                               <td>{{items.empaqueshow}}</td>
+                                               <td>
+                                               <span class="fa fa-pencil btn btn-success" ng-click="editItem(items,$index)" style="font-size:.7em; width:30px;"></span>
+                                                   <span class="fa fa-trash-o btn btn-danger" ng-click="delete($index)" style="font-size:.7em; width:30px;"></span>
+                                                            
+                                               </td>
+                                            </tr>
+                                        </tbody>
+                                        
+                                    </table>
+                                </div>
+                                <!--<div id="parent">
                                     <div class="panel" ng-repeat="items in itemsAgregadosPedido">
                                         <div data-toggle="collapse" data-parent="#parent" data-target="#{{items.rowid_item}}">         {{items.descripcion}}({{items.item_referencia1}})   <span class="fa fa-angle-down pull-right" style="margin-right:4px">
                                         </div>
@@ -349,7 +400,7 @@
                                                 </tr>
                                                 <tr ng-repeat="subitem in items.tallas">
                                                     <td>{{subitem.talla}}</td>
-                                                    <td>{{subitem.cantidad}} </td>
+                                                    <td>{{subitem.cantidad1}} </td>
                                                 </tr>
                                                 <tr>
                                                     <td>Descripcion
@@ -364,7 +415,7 @@
                                         </div>
 
                                     </div>
-                                </div>
+                                </div>-->
 
                                 <div class="form-group" style="display:none">
                                     <label for="criterio">Criterio Clasificacion :</label>

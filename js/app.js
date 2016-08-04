@@ -1,7 +1,7 @@
 /**
  * Created by dev10 on 12/23/2015.
  */
-var app_angular = angular.module('PedidosOnline', ['chart.js','ui.calendar','angular-websql', 'ngResource', 'ngRoute','angular-bootbox']);
+var app_angular = angular.module('PedidosOnline', ['chart.js','ui.calendar','angular-websql', 'ngResource', 'ngRoute','angular-bootbox','Firestitch.angular-counter']);
 
 app_angular.config(['$routeProvider',//'$locationProvider',
     function ($routeProvider) {
@@ -934,12 +934,19 @@ app_angular.controller('sessionController',['bootbox','Conexion','$scope','$loca
                         GRAFICA_MES_CANTIDAD[j]=DATOS_ENTIDADES_SINCRONIZACION[i][j].cantidad;
 
                     } 
+                    else if (STEP_SINCRONIZACION[i] == TABLA_BALANCE  && DATOS_ENTIDADES_SINCRONIZACION[i].length!=0) {
+                        
+                        TABLA_BALANCE_DATOS[j]=DATOS_ENTIDADES_SINCRONIZACION[i][j];
+
+                    } 
                 }
                 if (stringSentencia!='') {
                     CRUD.Updatedynamic(stringSentencia)
                     NewQuery=true;
                 }
             }
+            localStorage.removeItem('TABLA_BALANCE'); 
+            localStorage.setItem('TABLA_BALANCE',JSON.stringify(TABLA_BALANCE_DATOS));
             localStorage.removeItem('GRAFICA_MES_CANTIDAD'); 
             localStorage.setItem('GRAFICA_MES_CANTIDAD',JSON.stringify(GRAFICA_MES_CANTIDAD));
             localStorage.removeItem('GRAFICA_MES_LABEL');
