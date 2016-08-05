@@ -427,6 +427,10 @@ app_angular.service('Factory', function ($webSql) {
         "cantidad_embalaje": {
             "type": "INTEGER",
             "null": "NULL"
+        },
+        "tipo_inventario": {
+            "type": "TEXT",
+            "null": "NULL"
         }
     });
 
@@ -848,6 +852,23 @@ app_angular.service('Factory', function ($webSql) {
             "null": "NULL"
         },
         "descripcion": {
+            "type": "TEXT",
+            "null": "NULL"
+        },
+        "contacto": {
+            "type": "TEXT",
+            "null": "NULL"
+        },
+        "direccion": {
+            "type": "TEXT",
+            "null": "NULL"
+        }
+        ,
+        "email": {
+            "type": "TEXT",
+            "null": "NULL"
+        },
+        "telefono": {
             "type": "TEXT",
             "null": "NULL"
         }
@@ -1340,7 +1361,24 @@ app_angular.service('Factory', function ($webSql) {
         "usuariomod": {
             "type": "TEXT",
             "null": "NULL"
+        },
+        "direccion": {
+            "type": "TEXT",
+            "null": "NULL"
+        },
+        "contacto": {
+            "type": "TEXT",
+            "null": "NULL"
+        },
+        "email": {
+            "type": "TEXT",
+            "null": "NULL"
+        },
+        "telefono": {
+            "type": "TEXT",
+            "null": "NULL"
         }
+
 	});
 
 	db.createTable('erp_items_precios',{
@@ -1717,6 +1755,10 @@ app_angular.service('Factory', function ($webSql) {
         "rowid_erp": {
             "type": "text",
             "null": "NULL"
+        },
+        "stock": {
+            "type": "text",
+            "null": "NULL"
         }
     })
 
@@ -1726,7 +1768,8 @@ app_angular.service('Factory', function ($webSql) {
         " as  "+ 
         "select    "+
         "  a.item_codigo||'-'||a.item_referencia||'-'||a.item_descripcion||'-'||a.id_unidad||'-'||CAST(b.precio_lista as text)  as producto, a.impuesto_porcentaje  , "+
-        "a.id_unidad,a.rowid as rowid_item,a.item_descripcion as descripcion,a.item_codigo as item_codigo1,a.item_referencia as item_referencia1 ,b.rowid as rowid_listaprecios,b.precio_lista as precio,erp_entidades_master.rowid "+
+        "a.id_unidad,a.rowid as rowid_item,a.item_descripcion as descripcion,a.item_codigo as item_codigo1,a.item_referencia as item_referencia1 ,b.rowid as rowid_listaprecios,b.precio_lista as precio,erp_entidades_master.rowid, "+
+        "  a.tipo_inventario  "+
         " FROM erp_items a "  +
             " INNER JOIN erp_items_precios b "+
                 " ON b.rowid_item = a.rowid "+
