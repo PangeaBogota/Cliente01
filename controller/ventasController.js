@@ -88,25 +88,24 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 	}
 	$scope.cantidadTalla=function(talla,accion,stock)
 	{
+		$scope.cantidadrefererencia=0;
 		if (accion=="restar") {
 			for (var i = 0;i<$scope.tallas.length;i++) {
+
 				if ($scope.tallas[i].talla==talla) {
 					if ($scope.tallas[i].cantidad==0) {
 						return
 					}
 					if ($scope.item.item_custom1!="si") {
 						$scope.tallas[i].cantidad-=0.5;	
-						$scope.cantidadrefererencia-=0.5;
 						$scope.tallas[i].multiplo--;
-						return
 					}else{
 						$scope.tallas[i].cantidad-=1;	
-						$scope.cantidadrefererencia-=1;
 						$scope.tallas[i].multiplo--;
-						return
 					}
 					
 				}
+				$scope.cantidadrefererencia+=$scope.tallas[i].cantidad;
 			}
 				
 		}
@@ -116,31 +115,26 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 				if ($scope.tallas[i].talla==talla) {
 					if ($scope.item.item_custom1!="si") {
 						$scope.tallas[i].cantidad+=0.5;	
-						$scope.cantidadrefererencia+=0.5;
 						$scope.tallas[i].multiplo++;
 						$scope.Validarstock=$scope.tallas[i].cantidad*12;
 						if ($scope.Validarstock>stock) {
 							$scope.tallas[i].cantidad-=0.5;	
-							$scope.cantidadrefererencia-=0.5;
 							$scope.tallas[i].multiplo--;
 							Mensajes("La Cantidad no puede ser mayor al stock","error","");
 						}
-						return
 					}else{
 						$scope.tallas[i].cantidad+=1;	
-						$scope.cantidadrefererencia+=1;
 						$scope.tallas[i].multiplo++;
 						$scope.Validarstock=$scope.tallas[i].cantidad;
 						if ($scope.Validarstock>stock) {
 							$scope.tallas[i].cantidad-=1;	
-							$scope.cantidadrefererencia-=1;
 							$scope.tallas[i].multiplo--;
 							Mensajes("La Cantidad no puede ser mayor al stock","error","");
 						}
-						return
 					}
 					
 				}
+				$scope.cantidadrefererencia+=$scope.tallas[i].cantidad;
 			}
 		}
 			
@@ -493,13 +487,16 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		return
 		}
 		$scope.item.multiplo=$scope.multiplo;
-		$scope.CantidadTotalPedido+=$scope.item.cantidad;
 		$scope.item.tallas=$scope.tallasAgregar;
 		$scope.item.observaciones=$scope.Variables.descripcion;
 		$scope.item.empaque=$scope.empaque.tipo_reg_nombre;
 		$scope.item.empaqueshow=$scope.empaque.tipo_reg_nombre.slice(0,3);
 		$scope.itemsAgregadosPedido.unshift($scope.item);
 		Mensajes('Item Agregado','success','');
+		$scope.CantidadTotalPedido=0;
+		for (var i = 0;i<$scope.itemsAgregadosPedido.length;i++) {
+			$scope.CantidadTotalPedido+=$scope.itemsAgregadosPedido[i].cantidad;
+		}
 		$scope.item=[];
 		$scope.SearchItem='';
 		$scope.cantidadBase='';
