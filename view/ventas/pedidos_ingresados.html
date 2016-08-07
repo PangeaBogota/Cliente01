@@ -95,7 +95,8 @@
                                 </div>
                             </div>
                             <div class="row" style="margin: 0px"><h3>Items</h3></div>
-                            <table class="table  table-striped responsive-utilities jambo_table bulk_action">
+                            <div style="overflow-x:auto;" class="table-resposive">
+                                <table class="table  table-striped responsive-utilities jambo_table bulk_action">
                                 <thead>
                                     <th class="column-title">
                                         Ref. 
@@ -136,7 +137,9 @@
                                     </tr>
                                 </tbody>
                                 
-                            </table>
+                            </table>  
+                            </div>
+                            
                             <!--<div id="parent">
                                     <div class="panel" ng-repeat="detallespedido in detallespedido">
                                         <div style="font-color:blue" data-toggle="collapse" data-parent="#parent" data-target="#{{detallespedido.rowid_item}}">         {{detallespedido.linea_descripcion}}
