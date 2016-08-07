@@ -64,7 +64,7 @@ var STEP_SUBIRDATOS=
     ENTIDAD_ACTIVIDADES
     
     ];
-var DATABASE='PedidosOnline194';
+var DATABASE='PedidosOnline196';
 var DATOS_ENTIDADES_SINCRONIZACION = [];
 var CUR_USER=[];
 var ALMACENARDATOS=[];

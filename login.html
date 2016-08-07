@@ -114,6 +114,9 @@
                 });
             }
         }
+        function Exit(){
+            navigator.app.exitApp() 
+        }
         function Login(){
 
             $("#form_login").submit(function(e){
@@ -139,7 +142,6 @@
             ProcesadoShow();
 
             //alert('Login 1');
-            debugger
             console.log('http://demos.pedidosonline.co/Mobile/Login?username='+$("#username").val()+'&codigo_empresa='+$("#codigo_empresa").val()+'&pass='+$("#password").val())
             $.ajax({
                 dataType: "json",
@@ -191,7 +193,7 @@
             <div id="login" class="animate form">
                 <section class="login_content">
                     <form>
-                        <h1>Pedidos Online aNDRES pRUEBA aCTUALIZACION</h1>
+                        <h1>Pedidos Online</h1>
                         <div>
                             <input id="username" type="text" class="form-control" placeholder="Usuario" required="" />
                         </div>
@@ -204,6 +206,12 @@
                         </div>
                         <div>
                             <a id="form_login" class="btn btn-default submit" href="javascript:Login()">Iniciar Sesion</a>
+
+                        </a>
+                            
+                        </div>
+                        <div>
+                            <a id="form_login" class="btn btn-default submit" href="javascript:Exit()">Cerrar</a>
 
                         </a>
                             

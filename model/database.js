@@ -758,6 +758,10 @@ app_angular.service('Factory', function ($webSql) {
         "observaciones": {
             "type": "text",
             "null": "NULL"
+        },
+        "empaque": {
+            "type": "text",
+            "null": "NULL"
         }
         
     });
@@ -1769,7 +1773,7 @@ app_angular.service('Factory', function ($webSql) {
         "select    "+
         "  a.item_codigo||'-'||a.item_referencia||'-'||a.item_descripcion||'-'||a.id_unidad||'-'||CAST(b.precio_lista as text)  as producto, a.impuesto_porcentaje  , "+
         "a.id_unidad,a.rowid as rowid_item,a.item_descripcion as descripcion,a.item_codigo as item_codigo1,a.item_referencia as item_referencia1 ,b.rowid as rowid_listaprecios,b.precio_lista as precio,erp_entidades_master.rowid, "+
-        "  a.tipo_inventario  "+
+        "  a.tipo_inventario,a.item_custom1  "+
         " FROM erp_items a "  +
             " INNER JOIN erp_items_precios b "+
                 " ON b.rowid_item = a.rowid "+
