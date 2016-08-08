@@ -308,11 +308,8 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 	$scope.onChangeTercero=function(){
 		$scope.list_Sucursales=[];
 		$scope.list_puntoEnvio=[];
-		$scope.tallas=[];
 		$scope.sucursalDespacho=[];
 		$scope.ciudad='';
-		$scope.CantidadTotalPedido=0;
-		$scope.itemsAgregadosPedido=[];
 		$scope.ciudadSucursal=[];
 		$scope.list_items=[];
 		$scope.filter=[];
@@ -396,7 +393,6 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 			Mensajes('Seleccione un item de la lista','error','');
 			return
 		}
-		debugger
 		if($scope.Variables==undefined)
 		{
 			Mensajes('Llena la descripcion','error','');
