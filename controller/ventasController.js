@@ -391,23 +391,11 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 			Mensajes('Seleccione un item de la lista','error','');
 			return
 		}
-		if($scope.item==null)
-		{
-			Mensajes('Seleccione un item de la lista','error','');
-			return
-		}
 		if($scope.item.length==0)
 		{
 			Mensajes('Seleccione un item de la lista','error','');
 			return
 		}
-		debugger
-		if($scope.empaque.length==0)
-		{
-			Mensajes('Seleccione el empaque','error','');
-			return
-		}
-
 		$scope.validarExistencia=false;
 		
 		angular.forEach($scope.itemsAgregadosPedido,function(value,key){
@@ -481,15 +469,9 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 			Mensajes('Tallas sin Cantidades','error','');
 		return
 		}
-		debugger
 		$scope.item.multiplo=$scope.multiplo;
 		$scope.item.tallas=$scope.tallasAgregar;
-		if ($scope.Variables==undefined) {
-			$scope.item.observaciones='';	
-		}else{
-			$scope.item.observaciones=$scope.Variables.descripcion;	
-		}
-		
+		$scope.item.observaciones=$scope.Variables.descripcion;
 		$scope.item.empaque=$scope.empaque.tipo_reg_nombre;
 		$scope.item.empaqueshow=$scope.empaque.tipo_reg_nombre.slice(0,3);
 		$scope.itemsAgregadosPedido.unshift($scope.item);
@@ -506,7 +488,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		$scope.empaque=[];
 		$scope.tallas=[];
 		$scope.list_items=[];
-		$scope.Variables=undefined;
+		$scope.Variables.descripcion='';
 		$scope.tallasAgregar=[];
 		$scope.validaciones=false;
 		$scope.bandera.banderaEditar=false;
