@@ -396,6 +396,27 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 			Mensajes('Seleccione un item de la lista','error','');
 			return
 		}
+		debugger
+		if($scope.Variables==undefined)
+		{
+			Mensajes('Llena la descripcion','error','');
+			return
+		}
+		if($scope.Variables.descripcion==undefined)
+		{
+			Mensajes('Llena la descripcion','error','');
+			return
+		}
+		if($scope.Variables.descripcion=="")
+		{
+			Mensajes('Llena la descripcion','error','');
+			return
+		}
+		if($scope.empaque.tipo_reg_nombre==undefined)
+		{
+			Mensajes('Seleccionar Empaque','error','');
+			return
+		}
 		$scope.validarExistencia=false;
 		
 		angular.forEach($scope.itemsAgregadosPedido,function(value,key){
