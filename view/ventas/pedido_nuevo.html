@@ -316,8 +316,8 @@
                                                     </span>
                                                     </button>
                                                     </span>
-                                                <input type="number" class="form-control text-center" ng-model="tallas.cantidad" ng-change="onChangeCantidad(tallas.talla,tallas.stock)"  ng-readonly="readonly" style="min-width:50px">
-                                                    <span class="input-group-btn" ng-click="cantidadTalla(tallas.talla,'suma',tallas.stock)">
+                                                <input type="text" class="form-control text-center" ng-model="tallas.cantidad"  ng-readonly="readonly" style="min-width:50px">
+                                                    <span class="input-group-btn" ng-click="cantidadTalla(tallas.talla,'suma')">
                                                     <button type="button" class="btn btn-default">
                                                     <span class="glyphicon glyphicon-plus">
                                                     </span>
@@ -330,11 +330,6 @@
                                                 <td>
                                                     {{tallas.stock}}
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Total Cantidad</td>
-                                                <td>{{cantidadrefererencia}}</td>
-                                                <td></td>
                                             </tr>
                                         </tr>
                                     </table>

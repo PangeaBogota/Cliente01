@@ -303,8 +303,7 @@ app_angular.controller('sessionController',['bootbox','Conexion','$scope','$loca
                         "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].valor_porcen_descuento2+
                         "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].porcen_descuento3+
                         "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].valor_porcen_descuento3+
-                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].observaciones+
-                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].empaque+"' "; 
+                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].observaciones+"' "; 
                         if (contador==499) {
                             CRUD.Updatedynamic(stringSentencia)
                             NewQuery=true;
