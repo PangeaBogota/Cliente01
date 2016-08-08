@@ -49,7 +49,7 @@ app_angular.controller('sessionController',['bootbox','Conexion','$scope','$loca
     $scope.$watch('online', function(newStatus) 
         //$scope.status.connextionstate==false
         {$scope.status.connextionstate=newStatus;  
-            if ($scope.status.connextionstate==false) {
+            if (true) {
             $scope.alerta.message='Verifique su conexion a Internet ';
             $scope.alerta.disableBtnAceptar=false;
             $scope.alerta.header='Conexion Internet'
