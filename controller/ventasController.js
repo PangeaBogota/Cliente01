@@ -8,7 +8,6 @@ var app_angular = angular.module('PedidosOnline');
 app_angular.controller("pedidoController",['Conexion','$scope','$location','$http','$routeParams',function (Conexion,$scope,$location,$http,$routeParams) {
 	$scope.validaciones;
 	//$scope.validaciones.tituloTalla=false;
-	$scope.CantidadTotalPedido=0;
 	$scope.ejemplovista=[];
 	$scope.Variables;
 	$scope.tallas=[];
@@ -56,7 +55,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 	$scope.bandera.banderaEditarDelete=0;
 	$scope.empaque=[];
 	$scope.cantidadprueba=0;
-	$scope.cantidades=0;
+	$scope.cantidades=CANTIDADES_ITEMS;
 	$scope.cantidadTalla=function(talla,accion)
 	{
 		if (accion=="restar") {
@@ -93,7 +92,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		{
 			$scope.empaques.push(elem)
 		});
-	CRUD.select('select*from erp_terceros order by razonsocial',
+	CRUD.select('select*from erp_terceros',
 		function(elem)
 		{
 			$scope.list_tercero.push(elem);
@@ -106,68 +105,33 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 			}
 		});
 	
-	$scope.stringConsultaItems=function(parm1){
-		var count='';
-		var vista='';
-		if (parm1.pC==1) {
-			if ($scope.filter.codigoitem!=''  && $scope.filter.codigoitem!=undefined   &&  ( $scope.filter.descripcionitem==''   || $scope.filter.descripcionitem==undefined)){//  && $scope.filter.descripcionitem=='' || $scope.filter.descripcionitem==undefined ) {
-				vista="select*from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and    item_codigo1 like '%"+$scope.filter.codigoitem+"%'  order by rowid LIMIT 100 ";
-				count="select count(*) as cantidad from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and    item_codigo1 like '%"+$scope.filter.codigoitem+"%'  order by rowid LIMIT 100 ";
-			}
-			else if ($scope.filter.descripcionitem!='' && $scope.filter.descripcionitem!=undefined && ( $scope.filter.codigoitem=='' || $scope.filter.codigoitem==undefined   )) {
-				vista="select*from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+" and  (tipo_inventario = '"+parm1.p1+"')  and   (   item_referencia1 like '%"+$scope.filter.descripcionitem+"%'   or descripcion like '%"+$scope.filter.descripcionitem+"%' )   order by rowid LIMIT 100";
-				count="select count(*) from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and   (tipo_inventario = '"+parm1.p1+"')  and    (   item_referencia1 like '%"+$scope.filter.descripcionitem+"%'   or descripcion like '%"+$scope.filter.descripcionitem+"%' )   order by rowid LIMIT 100";
-			}
-			else if ($scope.filter.descripcionitem!='' && $scope.filter.descripcionitem!=undefined && $scope.filter.codigoitem!='' && $scope.filter.codigoitem!=undefined   ) {
-				vista="select*from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and  item_codigo1 like '%"+$scope.filter.codigoitem+"%' and (tipo_inventario = '"+parm1.p1+"')  and    (   item_referencia1 like '%"+$scope.filter.descripcionitem+"%'   or descripcion like '%"+$scope.filter.descripcionitem+"%' )    order by rowid LIMIT 200";
-				count="select count(*) as cantidadfrom vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and  item_codigo1 like '%"+$scope.filter.codigoitem+"%' and (tipo_inventario = '"+parm1.p1+"') and    (   item_referencia1 like '%"+$scope.filter.descripcionitem+"%'   or descripcion like '%"+$scope.filter.descripcionitem+"%' )    order by rowid LIMIT 200";
-			}
-			else {
-				vista="select*from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+" and (tipo_inventario = '"+parm1.p1+"')  order by rowid LIMIT 100 ";
-				count="select 100 as cantidad ";
-			}
-		}
-		else if (param1.pC==2) {
-			if ($scope.filter.codigoitem!=''  && $scope.filter.codigoitem!=undefined   &&  ( $scope.filter.descripcionitem==''   || $scope.filter.descripcionitem==undefined)){//  && $scope.filter.descripcionitem=='' || $scope.filter.descripcionitem==undefined ) {
-				vista="select*from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and    item_codigo1 like '%"+$scope.filter.codigoitem+"%'  order by rowid LIMIT 100 ";
-				count="select count(*) as cantidad from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and    item_codigo1 like '%"+$scope.filter.codigoitem+"%'  order by rowid LIMIT 100 ";
-			}
-			else if ($scope.filter.descripcionitem!='' && $scope.filter.descripcionitem!=undefined && ( $scope.filter.codigoitem=='' || $scope.filter.codigoitem==undefined   )) {
-				vista="select*from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and   (   item_referencia1 like '%"+$scope.filter.descripcionitem+"%'   or descripcion like '%"+$scope.filter.descripcionitem+"%' )  and    (tipo_inventario = '"+parm1.p1+"'  or  tipo_inventario = '"+parm1.p2+"')  order by rowid LIMIT 100";
-				count="select count(*) from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and   (   item_referencia1 like '%"+$scope.filter.descripcionitem+"%'   or descripcion like '%"+$scope.filter.descripcionitem+"%' )  and    (tipo_inventario = '"+parm1.p1+"'  or  tipo_inventario = '"+parm1.p2+"')  order by rowid LIMIT 100";
-			}
-			else if ($scope.filter.descripcionitem!='' && $scope.filter.descripcionitem!=undefined && $scope.filter.codigoitem!='' && $scope.filter.codigoitem!=undefined   ) {
-				vista="select*from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and  item_codigo1 like '%"+$scope.filter.codigoitem+"%' and   (   item_referencia1 like '%"+$scope.filter.descripcionitem+"%'   or descripcion like '%"+$scope.filter.descripcionitem+"%' )  and    (tipo_inventario = '"+parm1.p1+"'  or  tipo_inventario = '"+parm1.p2+"')   order by rowid LIMIT 200";
-				count="select count(*) as cantidadfrom vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and  item_codigo1 like '%"+$scope.filter.codigoitem+"%' and   (   item_referencia1 like '%"+$scope.filter.descripcionitem+"%'   or descripcion like '%"+$scope.filter.descripcionitem+"%' )  and    (tipo_inventario = '"+parm1.p1+"'  or  tipo_inventario = '"+parm1.p2+"')   order by rowid LIMIT 200";
-			}
-			else {
-				vista="select*from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  order by rowid LIMIT 100 ";
-				count="select 100 as cantidad ";
-			}
-		}
-
-		return vista;
-	}
+	
 	$scope.onChangeListaPrecios=function(){
 		
 		if ($scope.pedidos.rowid_lista_precios==undefined) {$scope.list_items=[];return}
 		$scope.list_items=[];
-		
-		$scope.filtroCO=[];
-		if ($scope.sucursal.centro_operacion=='001') {
-			$scope.filtroCO.p1='IN300501';
-			$scope.filtroCO.pC=1;
+		var count='';
+		var vista='';
+		if ($scope.filter.codigoitem!=''  && $scope.filter.codigoitem!=undefined   &&  ( $scope.filter.descripcionitem==''   || $scope.filter.descripcionitem==undefined)){//  && $scope.filter.descripcionitem=='' || $scope.filter.descripcionitem==undefined ) {
+			vista="select*from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and    item_codigo1 like '%"+$scope.filter.codigoitem+"%'  order by rowid LIMIT 100 ";
+			count="select count(*) as cantidad from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and    item_codigo1 like '%"+$scope.filter.codigoitem+"%'  order by rowid LIMIT 100 ";
 		}
-		else if ($scope.sucursal.centro_operacion=='003') 
-		{
-			$scope.filtroCO.p1='IN300502';
-		
-			$scope.filtroCO.p2='IN300503';
-			$scope.filtroCO.pC=2;
+		else if ($scope.filter.descripcionitem!='' && $scope.filter.descripcionitem!=undefined && ( $scope.filter.codigoitem=='' || $scope.filter.codigoitem==undefined   )) {
+			vista="select*from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and   (   item_referencia1 like '%"+$scope.filter.descripcionitem+"%'   or descripcion like '%"+$scope.filter.descripcionitem+"%' )   order by rowid LIMIT 100";
+			count="select count(*) from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and   (   item_referencia1 like '%"+$scope.filter.descripcionitem+"%'   or descripcion like '%"+$scope.filter.descripcionitem+"%' )   order by rowid LIMIT 100";
 		}
-		$scope.result=$scope.stringConsultaItems($scope.filtroCO);
-		CRUD.select($scope.result,function(elem){$scope.list_items.push(elem);if ($scope.bandera.banderaEditar==true) {$scope.item=$scope.list_items[0]}});
-		
+		else if ($scope.filter.descripcionitem!='' && $scope.filter.descripcionitem!=undefined && $scope.filter.codigoitem!='' && $scope.filter.codigoitem!=undefined   ) {
+			vista="select*from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and  item_codigo1 like '%"+$scope.filter.codigoitem+"%' and   (   item_referencia1 like '%"+$scope.filter.descripcionitem+"%'   or descripcion like '%"+$scope.filter.descripcionitem+"%' )    order by rowid LIMIT 200";
+			count="select count(*) as cantidadfrom vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  and  item_codigo1 like '%"+$scope.filter.codigoitem+"%' and   (   item_referencia1 like '%"+$scope.filter.descripcionitem+"%'   or descripcion like '%"+$scope.filter.descripcionitem+"%' )    order by rowid LIMIT 200";
+		}
+		else {
+			vista="select*from vw_items_precios  where  rowid="+$scope.pedidos.rowid_lista_precios+"  order by rowid LIMIT 100 ";
+			count="select 100 as cantidad ";
+		}
+		CRUD.select(vista,function(elem){$scope.list_items.push(elem);if ($scope.bandera.banderaEditar==true) {$scope.item=$scope.list_items[0]}});
+		//var query1="select item.item_codigo||'-'||item.item_referencia||'-'||item.item_descripcion||'-'||item.id_unidad||'-'||CAST(precios.precio_lista as text)  as producto,item.id_unidad,item.rowid as rowid_item,item.item_descripcion as descripcion,precios.rowid as rowid_listaprecios,precios.precio_lista as precio";
+		//var query=query1+" from erp_items item inner join erp_items_precios precios on  item.rowid=precios.rowid_item  inner join erp_entidades_master maestro on maestro.erp_id_maestro=precios.id_lista_precios  WHERE  maestro.rowid="+$scope.pedidos.rowid_lista_precios+"    order by item.item_descripcion";
+		//CRUD.select(query,function(elem){$scope.list_items.push(elem);});
 	}
 	$scope.onChangeFiltro=function()
 	{
@@ -212,6 +176,12 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		var FechaSolicitud=$scope.pedidos.fecha_solicitud.replace('-','');
 		FechaCreacion=FechaCreacion.replace('-','');
     	 FechaSolicitud=FechaSolicitud.replace('-','');
+    	//if (FechaSolicitud<FechaCreacion) {
+    		//$scope.pedidos.fecha_solicitud='';
+    		//document.getElementById("fecha_solicitud").valueAsDate = null;
+    		//Mensajes('Fecha Solicitud No puede ser Menor que La Fecha creacion del pedido','error','');
+    		//return;
+    	//}
 	}
 	$scope.fechaentrega=function(){
 		$scope.pedidos.fecha_solicitud=$scope.CurrentDate();
@@ -232,7 +202,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 	$scope.onChangeComboItem=function(){
 		
 		$scope.tallas=[];
-		CRUD.select("select distinct  e.itemID,item.item_referencia,e.extencionDetalle1ID as talla,0 as cantidad,0  as multiplo,ext1_d.erp_descripcion_corta,sum(stock) as stock from erp_items_extenciones  e inner join erp_items item on item.rowid=e.itemID inner join  erp_item_extencion1_detalle ext1_d on ext1_d.rowid_erp=e.extencionDetalle1ID where e.itemID='"+$scope.item.rowid_item+"'  group by extenciondetalle1id order by ext1_d.erp_descripcion_corta ",function(elem){
+		CRUD.select("select distinct  e.itemID,item.item_referencia,e.extencionDetalle1ID as talla,0 as cantidad,0  as multiplo,ext1_d.erp_descripcion_corta from erp_items_extenciones  e inner join erp_items item on item.rowid=e.itemID inner join  erp_item_extencion1_detalle ext1_d on ext1_d.rowid_erp=e.extencionDetalle1ID where e.itemID='"+$scope.item.rowid_item+"'  order by ext1_d.erp_descripcion_corta ",function(elem){
 			
 			$scope.validaciones=true;
 			if ($scope.bandera.banderaEditar==true) {
@@ -244,11 +214,6 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 			}
 			$scope.tallas.push(elem);
 		})
-	}
-	$scope.onChangePuntoEnvio=function()
-	{
-		$scope.sucursalDespacho=$scope.puntoEnvio;
-		
 	}
 	$scope.onChangeTercero=function(){
 		$scope.list_Sucursales=[];
@@ -291,7 +256,6 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		//CRUD.selectParametro('erp_entidades_master','erp_id_maestro',$scope.sucursal.id_lista_precios,function(elem){$scope.list_precios.push(elem)});
 		$scope.pedidos.rowid_cliente_facturacion=$scope.sucursal.rowid;
 		$scope.sucursalDespacho=$scope.sucursal;
-		//$scope.sucursalDespacho=$scope.sucursal;
 		$scope.onChangeSucursalDespacho();
 	}
 
@@ -299,9 +263,9 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 	{
 		//console.log("select  *from erp_terceros_punto_envio where rowid_tercero = '"+$scope.terceroSelected.rowid+"'  and  codigo_sucursal = '"+$scope.sucursalDespacho.codigo_sucursal+"'   order by rowid  LIMIT 1  ");
 		$scope.pedidos.rowid_cliente_despacho=$scope.sucursalDespacho.rowid;
-		//CRUD.select("select pais.nombre||'-'||ciudad.nombre as nombre from m_localizacion  pais inner join m_localizacion ciudad  on ciudad.id_pais=pais.id_pais and pais.id_depto='' and pais.id_ciudad=''  where ciudad.id_ciudad='"+$scope.sucursalDespacho.id_ciudad+"' and ciudad.id_depto='"+$scope.sucursalDespacho.id_depto+"' and ciudad.id_pais='"+$scope.sucursalDespacho.id_pais+"'",
-		//	function(elem){$scope.ciudadSucursal=elem});
-		CRUD.select("select direccion ||'-'|| nombre_punto_envio as concatenado, *from erp_terceros_punto_envio where rowid_tercero = '"+$scope.terceroSelected.rowid+"'  and  codigo_sucursal = '"+$scope.sucursalDespacho.codigo_sucursal+"'   order by rowid ",
+		CRUD.select("select pais.nombre||'-'||ciudad.nombre as nombre from m_localizacion  pais inner join m_localizacion ciudad  on ciudad.id_pais=pais.id_pais and pais.id_depto='' and pais.id_ciudad=''  where ciudad.id_ciudad='"+$scope.sucursalDespacho.id_ciudad+"' and ciudad.id_depto='"+$scope.sucursalDespacho.id_depto+"' and ciudad.id_pais='"+$scope.sucursalDespacho.id_pais+"'",
+			function(elem){$scope.ciudadSucursal=elem});
+		CRUD.select("select id_punto_envio||'-'||nombre_punto_envio as concatenado, *from erp_terceros_punto_envio where rowid_tercero = '"+$scope.terceroSelected.rowid+"'  and  codigo_sucursal = '"+$scope.sucursalDespacho.codigo_sucursal+"'   order by rowid ",
 			function(elem){$scope.list_puntoEnvio.push(elem);
 				//$scope.pedidos.id_punto_envio=elem.rowid;$scope.puntoEnvio=elem
 			});
@@ -425,7 +389,6 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		return
 		}
 		$scope.item.multiplo=$scope.multiplo;
-		$scope.CantidadTotalPedido+=$scope.item.cantidad;
 		$scope.item.tallas=$scope.tallasAgregar;
 		$scope.item.observaciones=$scope.Variables.descripcion;
 		$scope.item.empaque=$scope.empaque.tipo_reg_nombre;
@@ -445,7 +408,6 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		$scope.validaciones=false;
 		$scope.bandera.banderaEditar=false;
 		
-		$('#rowid_item').focus();
 	}
 
 

@@ -159,15 +159,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" >Punto Envio<span class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <select id="id_punto_envio"  required
-                                                        ng-model="puntoEnvio"  ng-options="puntoenvio as puntoenvio.concatenado 
-                                                        for puntoenvio in list_puntoEnvio " class="form-control" ng-change="onChangePuntoEnvio()" >
-                                            </select>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="form-group" style="display:none">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" >Sucursal Despacho<span class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -178,7 +170,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group" style="display:none">
+                                    <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" >Ciudad<span class="required"></span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input  placeholder="Ciudad"  ng-model="ciudadSucursal.nombre" type="text"  readonly class="form-control col-md-7 col-xs-12"  ></input>
@@ -187,25 +179,25 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" >Direccion<span class="required"></span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input  placeholder="Direccion"  type="text" ng-model="sucursalDespacho.direccion" readonly class="form-control col-md-7 col-xs-12"  ></input>
+                                            <input  placeholder="Direccion"  type="text" ng-model="sucursalDespacho.direccion1" readonly class="form-control col-md-7 col-xs-12"  ></input>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" >Contacto<span class="required"></span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input placeholder="Contacto" ng-model="sucursalDespacho.contacto"  type="text"  readonly class="form-control col-md-7 col-xs-12"  ></input>
+                                            <input placeholder="Contacto" ng-model="sucursalDespacho.nombre_contacto"  type="text"  readonly class="form-control col-md-7 col-xs-12"  ></input>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" >Email<span class="required"></span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input placeholder="Email" ng-model="sucursalDespacho.email"   type="text"  readonly class="form-control col-md-7 col-xs-12"  ></input>
+                                            <input placeholder="Email" ng-model="sucursalDespacho.email_contacto"   type="text"  readonly class="form-control col-md-7 col-xs-12"  ></input>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" >Telefono<span class="required"></span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input  placeholder="Telefono"  type="text" ng-model="sucursalDespacho.telefono" readonly class="form-control col-md-7 col-xs-12"  ></input>
+                                            <input  placeholder="Telefono"  type="text" ng-model="sucursalDespacho.telefono1" readonly class="form-control col-md-7 col-xs-12"  ></input>
                                         </div>
                                     </div>
                                     <div class="form-group" style="display:none">
@@ -224,7 +216,15 @@
                                         </div>
                                     </div>
 
-                                    
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" >Punto Envio<span class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select id="id_punto_envio"  required
+                                                        ng-model="puntoEnvio"  ng-options="puntoenvio as puntoenvio.concatenado 
+                                                        for puntoenvio in list_puntoEnvio " class="form-control" >
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" >Orden Compra<span class="required"></span></label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -262,13 +262,13 @@
                                         <div class="form-group">
                                             <div class="row " style="display:none">
                                                 <div class="form-group">
-                                                    <input type="text" ng-model="filter.codigoitem"  placeholder="Codigo Item" name="  rowid_item"  ng-change="focusInput=false;onChangeFiltro()" class="form-control" />
+                                                    <input type="text" ng-model="filter.codigoitem"  placeholder="Codigo Item" name="  rowid_item"  ng-change="onChangeFiltro()" class="form-control" />
                                                 </div>
                                                 
                                             </div>  
                                             <div class="row">
                                                 <div class="col-md-8 col-sm-8 col-xs-8">
-                                                    <input type="text" ng-model="filter.descripcionitem"  placeholder="Referencia-Descripcion Item" name="rowid_item"  id="rowid_item" ng-change="onChangeFiltro()" class="form-control"  focus-me="focusInput"/>
+                                                    <input type="text" ng-model="filter.descripcionitem"  placeholder="Referencia-Descripcion Item" name="  rowid_item"  ng-change="onChangeFiltro()" class="form-control"  focus-me="focusInput"/>
                                                 </div>
                                                 <div class="pull-right">
                                                     <button class="btn btn-success"  id="rowid_item" ng-click="onGetFiltro()"> <span class="fa fa-search"></span></button>
@@ -290,53 +290,46 @@
                                                     <select   ng-model="empaque" id="dataFiltered"  ng-options="empaque as empaque.tipo_reg_nombre for empaque in empaques " class="form-control" required >
                                                     </select>    
                                                 </div>
-                                                
+                                                <div class="pull-right">
+                                                    <button type="button" class="btn btn-success"  ng-click="hasFocus1=false;adicionaritem()" data-toggle="dropdown">
+                                                        <span class="icon-ok control-label" ng-disabled"form_detalle.$invalid"></span>
+                                                    </button> 
+                                                </div>
                                             </div>
                                             
                                     </div>
                                 </div>
                                 
                                 <div class="form-group" ng-show="validaciones">
-                                    <table class="table">
-                                        <tr>
-                                            <td>Tallas</td>
-                                            <td>Cantidad</td>
-                                            <td>Stock</td>
-                                        </tr>
-                                        <tr>
-                                            <tr  ng-repeat="tallas in tallas">
-                                                <td class="col-md-2 col-ms-2 col-xs-2">{{tallas.talla}}</td>
-                                                <td class="col-md-4  col-ms-4 col-xs-4">
-                                                    <div >
-                                                       <div class=" input-group"  >
-                                                    <span class="input-group-btn" ng-click="cantidadTalla(tallas.talla,'restar')">
-                                                    <button type="button" class="btn btn-default">
-                                                    <span class="glyphicon glyphicon-minus">
-                                                    
-                                                    </span>
-                                                    </button>
-                                                    </span>
-                                                <input type="text" class="form-control text-center" ng-model="tallas.cantidad"  ng-readonly="readonly" style="min-width:50px">
-                                                    <span class="input-group-btn" ng-click="cantidadTalla(tallas.talla,'suma')">
-                                                    <button type="button" class="btn btn-default">
-                                                    <span class="glyphicon glyphicon-plus">
-                                                    </span>
-                                                    </button>
-                                                    </span>
-                                                    </div> 
-                                                    </div>
-                                                    
-                                                </td>
-                                                <td>
-                                                    {{tallas.stock}}
-                                                </td>
-                                            </tr>
-                                        </tr>
-                                    </table>
-                                    
-                                    
+                                    <label for="rowid_item" class="control-label">Tallas<span class="required">*</span></label>
                                 </div>
-                                
+                                <div class="form-group" ng-repeat="tallas in tallas">
+                                    <div class="row" style="margin:0px">
+                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                            {{tallas.talla}}
+                                        </div>
+                                        <div class="col-md-2 col-sm-2 col-xs-4 ">
+                                            <!--<select ng-model="tallas.cantidad" class="form-control" ng-options="cant as cant for cant in cantidades"></select>-->
+
+                                            <div class=" input-group"  >
+                                                <span class="input-group-btn" ng-click="cantidadTalla(tallas.talla,'restar')">
+                                                <button type="button" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-minus">
+                                                
+                                                </span>
+                                                </button>
+                                                </span>
+                                            <input type="text" class="form-control text-center" ng-model="tallas.cantidad"  ng-readonly="readonly" style="min-width:100px">
+                                                <span class="input-group-btn" ng-click="cantidadTalla(tallas.talla,'suma')">
+                                                <button type="button" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-plus">
+                                                </span>
+                                                </button>
+                                                </span>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group" >
                                     <label for="descripcion">Descripcion:</label> 
                                     <textarea class="form-control" rows="4" id="descripcion" ng-model="Variables.descripcion" required></textarea>
@@ -347,11 +340,8 @@
                                 </div>
 
                                 <div class="form-actions">
-                                    <button class="btn btn-primary pull-right" type="submit" ng-click="CambiarTab('2','siguiente')" >Balance</button>
-                                    <button type="button" class="btn btn-success pull-right"  ng-click="focusInput=true;adicionaritem()" data-toggle="dropdown" ng-disabled"form_detalle.$invalid">
-                                        
-                                        Agregar
-                                    </button> 
+                                    <button class="btn btn-success pull-right" type="submit" ng-click="CambiarTab('2','siguiente')" >Continuar</button>
+                                    <button class="btn btn-primary pull-right" type="submit" ng-click="CambiarTab('2','atras');">Atras</button>
                                 </div>
                             </form>
                         </div>
@@ -388,22 +378,6 @@
                                                    <span class="fa fa-trash-o btn btn-danger" ng-click="delete($index)" style="font-size:.7em; width:30px;"></span>
                                                             
                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Total:
-                                                </td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>{{CantidadTotalPedido}}</td>
-                                                <td></td>
-                                                <td></td>
                                             </tr>
                                         </tbody>
                                         

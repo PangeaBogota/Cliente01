@@ -343,11 +343,7 @@ app_angular.controller('sessionController',['bootbox','Conexion','$scope','$loca
                         "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].fechamod+
                         "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].usuariomod+
                         "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].id_impuesto+
-                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].descripcion+
-                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].contacto+
-                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].direccion+
-                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].email+
-                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].telefono+"' "; 
+                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].descripcion+"' "; 
                         if (contador==499) {
                             CRUD.Updatedynamic(stringSentencia)
                             NewQuery=true;
@@ -472,11 +468,7 @@ app_angular.controller('sessionController',['bootbox','Conexion','$scope','$loca
                         "', '"+DATOS_ENTIDADES_SINCRONIZACION[i][j].fechacreacion+
                         "', '"+DATOS_ENTIDADES_SINCRONIZACION[i][j].usuariocreacion+
                         "', '"+DATOS_ENTIDADES_SINCRONIZACION[i][j].fechamod+
-                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].usuariomod+
-                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].direccion+
-                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].contacto+
-                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].email+
-                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].telefono+"' "; 
+                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].usuariomod+"' "; 
                         if (contador==499) {
                             CRUD.Updatedynamic(stringSentencia)
                             NewQuery=true;
@@ -518,8 +510,7 @@ app_angular.controller('sessionController',['bootbox','Conexion','$scope','$loca
                         "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].impuesto_id+
                         "', '"+DATOS_ENTIDADES_SINCRONIZACION[i][j].impuesto_porcentaje+
                         "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].descripcion_adicional+
-                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].cantidad_embalaje+
-                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].tipo_inventario+"' "; 
+                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].cantidad_embalaje+"' "; 
                         
                         if (contador==499) {
                             CRUD.Updatedynamic(stringSentencia)
@@ -922,8 +913,7 @@ app_angular.controller('sessionController',['bootbox','Conexion','$scope','$loca
                         "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].BarrasPrincipalID+
                         "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].planKitID+
                         "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].itemExtGenID+
-                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].rowid_erp+
-                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].stock+"' "; 
+                        "','"+DATOS_ENTIDADES_SINCRONIZACION[i][j].rowid_erp+"' "; 
                         if (contador==499) {
                             CRUD.Updatedynamic(stringSentencia)
                             NewQuery=true;
