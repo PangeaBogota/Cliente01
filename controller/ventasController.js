@@ -554,6 +554,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 			
 		});
 		$scope.item=item;
+		$scope.Variables=[];
 		$scope.Variables.descripcion=item.observaciones;
 		$scope.onChangeComboItem();
 		//console.log(index)
